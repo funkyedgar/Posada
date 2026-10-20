@@ -58,6 +58,24 @@ html{background:var(--pino)}
 .globo{transform-box:view-box;transform-origin:240px 86px;animation:aparece .45s .9s cubic-bezier(.2,1.6,.4,1) both}
 .mono-regalos{animation:llega-izq .8s .3s cubic-bezier(.2,1.2,.4,1) both}
 
+.nino-salta{transform-box:fill-box;transform-origin:50% 100%;animation:saltar .9s ease-in-out infinite}
+@keyframes saltar{0%,100%{transform:translateY(0) scaleY(.92)}12%{transform:translateY(0) scaleY(1)}
+  50%{transform:translateY(-36px) scaleY(1.04)}88%{transform:translateY(0) scaleY(1)}}
+.nino-sombra{transform-box:fill-box;transform-origin:50% 50%;animation:sombra .9s ease-in-out infinite}
+@keyframes sombra{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(.5);opacity:.35}}
+.nino-brazo{transform-box:fill-box;animation:agita .45s ease-in-out infinite alternate}
+.nino-brazo.izq{transform-origin:100% 100%}.nino-brazo.der{transform-origin:0% 100%}
+@keyframes agita{from{transform:rotate(-10deg)}to{transform:rotate(10deg)}}
+
+.estrella-chica{transform-box:fill-box;transform-origin:50% 50%;animation:brilla 1.8s ease-in-out infinite}
+
+/* Fondo blanco al ganar puntos */
+html,body{transition:background-color .4s}
+html.blanca,body.blanca{background:#fff}
+body.blanca .hero h1{color:var(--rojo);text-shadow:0 3px 0 #f2c14e}
+body.blanca .copo{color:#a9c6dc}
+body.blanca .nota{color:var(--suave)}
+
 .hero{text-align:center;margin:0 0 20px}
 .hero .lugar{font-family:"Mountains of Christmas",cursive;color:var(--oro);font-size:30px;margin:0;line-height:1}
 .hero h1{font-family:"Mountains of Christmas",cursive;font-weight:700;font-size:clamp(36px,11vw,52px);line-height:1;
@@ -283,6 +301,26 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
     </g>
   </svg>
 
+  <svg class="escena" id="escena-ok" viewBox="0 0 360 238" role="img" aria-label="Niños saltando de emoción junto al pino" style="display:none">
+    <ellipse cx="180" cy="222" rx="178" ry="15" fill="#eef4f8" stroke="#dde7ee" stroke-width="2"/>
+    <g>
+      <rect x="174" y="198" width="12" height="18" rx="2" fill="#6b3e26"/>
+      <polygon points="146,202 214,202 180,150" fill="#2f9e62"/>
+      <polygon points="153,172 207,172 180,128" fill="#2f9e62"/>
+      <polygon points="160,144 200,144 180,106" fill="#2f9e62"/>
+      <polygon points="180,150 214,202 180,202" fill="#1f7a4d"/>
+      <polygon points="180,128 207,172 180,172" fill="#1f7a4d"/>
+      <polygon points="180,106 200,144 180,144" fill="#1f7a4d"/>
+      <circle class="luz" cx="168" cy="190" r="3.5" fill="#ff4d4d"/>
+      <circle class="luz" cx="194" cy="186" r="3.5" fill="#ffe08a" style="animation-delay:.4s"/>
+      <circle class="luz" cx="176" cy="160" r="3.5" fill="#7fd3ff" style="animation-delay:.2s"/>
+      <circle class="luz" cx="192" cy="134" r="3.5" fill="#ff4d4d" style="animation-delay:.6s"/>
+      <polygon class="estrella-chica" fill="#f2c14e" stroke="#e0a92e" stroke-width="1"
+        points="180,92 183,100 191.5,100.3 184.8,105.6 187.1,113.7 180,109 172.9,113.7 175.2,105.6 168.5,100.3 177,100"/>
+    </g>
+    <g id="ninos"></g>
+  </svg>
+
   <header class="hero">
     <h1 id="t2"></h1>
   </header>
@@ -447,11 +485,63 @@ function tarjeta(r) {
     (r.id ? '<p class="id-jugador">Tu ID de jugador: <b>' + esc(r.id) + '</b></p>' : '') + '</section>';
 }
 
-// Cambia la escena de arriba: 'normal' (Santa, pino y reno) o 'repetido' (muñeco de nieve)
+// Cambia la escena de arriba:
+//  'repetido' → muñeco de nieve | 'ok' → niños saltando con fondo blanco | otro → Santa, pino y reno
 function verEscena(cual) {
-  var normal = document.getElementById('escena-normal'), rep = document.getElementById('escena-repetido');
-  normal.style.display = cual === 'repetido' ? 'none' : 'block';
-  rep.style.display = cual === 'repetido' ? 'block' : 'none';
+  var esc = cual === 'repetido' || cual === 'ok' ? cual : 'normal';
+  ['normal', 'repetido', 'ok'].forEach(function (n) {
+    document.getElementById('escena-' + n).style.display = n === esc ? 'block' : 'none';
+  });
+  document.body.classList.toggle('blanca', esc === 'ok');
+  document.documentElement.classList.toggle('blanca', esc === 'ok');
+}
+
+// Dibuja un niño saltando. x = posición, d = retraso de la animación
+function nino(x, piel, pelo, sueter, pantalon, extra, d) {
+  var s = 'animation-delay:' + d + 's';
+  var h = '<g transform="translate(' + x + ' 216)">' +
+    '<ellipse class="nino-sombra" style="' + s + '" cx="0" cy="2" rx="16" ry="4" fill="rgba(30,40,60,.15)"/>' +
+    '<g class="nino-salta" style="' + s + '">' +
+      '<rect x="-9" y="-30" width="7" height="28" rx="3" fill="' + pantalon + '"/>' +
+      '<rect x="2" y="-30" width="7" height="28" rx="3" fill="' + pantalon + '"/>' +
+      '<ellipse cx="-6" cy="-2" rx="6.5" ry="3.5" fill="#3a2a1a"/><ellipse cx="6" cy="-2" rx="6.5" ry="3.5" fill="#3a2a1a"/>' +
+      '<g class="nino-brazo izq" style="animation-delay:' + (d + 0.1) + 's">' +
+        '<path d="M-11 -55 L-25 -84" stroke="' + sueter + '" stroke-width="7" stroke-linecap="round"/>' +
+        '<circle cx="-26" cy="-87" r="5" fill="' + piel + '"/></g>' +
+      '<g class="nino-brazo der" style="animation-delay:' + d + 's">' +
+        '<path d="M11 -55 L25 -84" stroke="' + sueter + '" stroke-width="7" stroke-linecap="round"/>' +
+        '<circle cx="26" cy="-87" r="5" fill="' + piel + '"/></g>' +
+      '<rect x="-14" y="-62" width="28" height="34" rx="10" fill="' + sueter + '"/>' +
+      '<rect x="-14" y="-47" width="28" height="5" fill="#fff" opacity=".85"/>' +
+      '<circle cx="-7" cy="-44.5" r="1.4" fill="' + sueter + '"/><circle cx="0" cy="-44.5" r="1.4" fill="' + sueter + '"/>' +
+      '<circle cx="7" cy="-44.5" r="1.4" fill="' + sueter + '"/>' +
+      '<circle cx="0" cy="-76" r="14" fill="' + piel + '"/>' +
+      '<path d="M-14 -78 Q-12 -94 0 -92 Q12 -94 14 -78 Q8 -86 0 -85 Q-8 -86 -14 -78Z" fill="' + pelo + '"/>' +
+      '<path d="M-8 -78 q3 -4 6 0 M2 -78 q3 -4 6 0" stroke="#2a1d1f" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+      '<path d="M-5.5 -71 Q0 -63 5.5 -71 Z" fill="#8a2433"/>' +
+      '<circle cx="-9" cy="-72" r="2.6" fill="#f4a3a0" opacity=".8"/><circle cx="9" cy="-72" r="2.6" fill="#f4a3a0" opacity=".8"/>';
+  if (extra === 'gorro') {
+    h += '<path d="M-14 -84 Q-4 -112 18 -100 L12 -86Z" fill="#c8102e"/>' +
+         '<rect x="-16" y="-89" width="32" height="7" rx="3.5" fill="#fff"/><circle cx="19" cy="-100" r="4.5" fill="#fff"/>';
+  } else if (extra === 'cuernos') {
+    h += '<path d="M-8 -88 L-12 -102 M-11 -97 L-17 -100 M8 -88 L12 -102 M11 -97 L17 -100" stroke="#a8733f" stroke-width="2.6" stroke-linecap="round" fill="none"/>' +
+         '<path d="M-13 -86 Q0 -96 13 -86" stroke="#c8102e" stroke-width="2.5" fill="none"/>';
+  } else if (extra === 'colitas') {
+    h += '<circle cx="-15" cy="-82" r="5.5" fill="' + pelo + '"/><circle cx="15" cy="-82" r="5.5" fill="' + pelo + '"/>' +
+         '<circle cx="-11" cy="-85" r="2.4" fill="#2f9e62"/><circle cx="11" cy="-85" r="2.4" fill="#2f9e62"/>';
+  } else if (extra === 'gorra') {
+    h += '<path d="M-14 -82 Q0 -104 14 -82Z" fill="#1f7a4d"/>' +
+         '<rect x="-15" y="-85" width="30" height="6" rx="3" fill="#f2c14e"/><circle cx="0" cy="-99" r="4.5" fill="#f2c14e"/>';
+  }
+  return h + '</g></g>';
+}
+
+function dibujarNinos() {
+  document.getElementById('ninos').innerHTML =
+    nino(54, '#f6c9a8', '#6b3e26', '#c8102e', '#2b3a67', 'gorro', 0) +
+    nino(118, '#c98d63', '#2a1d1f', '#2f9e62', '#4a3b2a', 'colitas', 0.25) +
+    nino(242, '#e8b48f', '#d9a441', '#f2b33d', '#2b3a67', 'cuernos', 0.12) +
+    nino(306, '#8d5a3b', '#1d1d1d', '#1f7a4d', '#7a1d2b', 'gorra', 0.38);
 }
 
 function inicio(r, aviso, animar) {
@@ -505,7 +595,7 @@ function resultado(o) {
       inicio(o, aviso, tipo === 'ok');
     };
     document.getElementById('ver').onclick = ir;
-    setTimeout(ir, 5000);
+    setTimeout(ir, 10000);
   }
 }
 
@@ -543,7 +633,8 @@ function confeti() {
         var d = document.createElement('div');
         d.className = 'conf';
         d.style.left = Math.random() * 100 + 'vw';
-        d.style.background = COLORES[Math.floor(Math.random() * COLORES.length)];
+        var CF = ['#c8102e', '#f2c14e', '#2f9e62', '#ff4d4d', '#1f7a4d', '#b8c2cc'];
+        d.style.background = CF[Math.floor(Math.random() * CF.length)];
         var s = 6 + Math.random() * 8;
         d.style.width = s + 'px'; d.style.height = (s * 1.6) + 'px';
         if (Math.random() < .3) d.style.borderRadius = '50%';
@@ -572,6 +663,7 @@ function contador(a, b) {
 
 /* ---------- Arranque ---------- */
 esferas();
+dibujarNinos();
 if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) nieve();
 
 if (D.codigo) {
