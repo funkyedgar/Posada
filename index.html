@@ -136,9 +136,15 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
 .estado .t{font-family:"Mountains of Christmas",cursive;font-size:30px;line-height:1.05;color:#fff;font-weight:700;
   text-shadow:0 2px 0 var(--rojo2),0 0 12px rgba(255,255,255,.35)}
 .estado .s{color:#e3f1e8;font-size:15px;margin-top:4px;line-height:1.35}
-.estado.ok{background:var(--rojo);border-color:var(--oro)}
-.estado.ok .t{text-shadow:0 2px 0 #5e0614,0 0 12px rgba(255,255,255,.35)}
-.estado.ok .ico{background:var(--oro)}
+.estado.ok{position:relative;background:#fffaf0;border:9px solid transparent;border-radius:6px;
+  border-image:repeating-linear-gradient(-45deg,var(--rojo) 0 10px,#fff 10px 20px,var(--hoja2) 20px 30px,#fff 30px 40px) 9;
+  box-shadow:0 18px 30px -14px rgba(0,0,0,.6);padding:22px 56px 20px 18px}
+.estado.ok .t{color:var(--rojo);text-shadow:none}
+.estado.ok .s{color:var(--hoja2);font-weight:800}
+.estado.ok .ico{background:#fff3d6;border:2px dashed #e3c98f}
+.estado.ok .timbre{position:absolute;top:-18px;right:-14px;width:44px;height:52px;background:#fff;transform:rotate(8deg);
+  display:grid;place-items:center;font-size:24px;border:2px dashed var(--rojo);border-radius:3px;
+  box-shadow:0 3px 6px rgba(0,0,0,.18)}
 .estado.repetido{background:#f7ecd8;border-color:#e3c98f}
 .estado.repetido .t{color:var(--rojo);text-shadow:none}
 .estado.repetido .s{color:var(--rojo2);font-weight:700}
@@ -319,7 +325,8 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
   </svg>
 
   <svg class="escena" id="escena-ok" viewBox="0 0 360 238" role="img" aria-label="Niños saltando de emoción junto al pino" style="display:none">
-    <ellipse cx="180" cy="222" rx="178" ry="15" fill="#eef4f8" stroke="#dde7ee" stroke-width="2"/>
+    <ellipse cx="180" cy="222" rx="178" ry="15" fill="#fffaf3"/>
+    <ellipse cx="180" cy="219" rx="150" ry="7" fill="#e7f0f5"/>
     <g>
       <rect x="174" y="198" width="12" height="18" rx="2" fill="#6b3e26"/>
       <polygon points="146,202 214,202 180,150" fill="#2f9e62"/>
@@ -601,8 +608,6 @@ function verEscena(cual) {
   ['normal', 'repetido', 'ok', 'leyendo'].forEach(function (n) {
     document.getElementById('escena-' + n).style.display = n === esc ? 'block' : 'none';
   });
-  document.body.classList.toggle('blanca', esc === 'ok');
-  document.documentElement.classList.toggle('blanca', esc === 'ok');
 }
 
 // Dibuja un niño saltando. x = posición, d = retraso de la animación
@@ -683,8 +688,10 @@ var AVISOS = { ok: 'Último código', repetido: 'Ese QR ya lo tenías', expirado
 function resultado(o) {
   var tipo = o.tipo || 'hola';
   if (tipo === 'repetido') { o.titulo = 'Ya tienes este QR'; o.sub = 'Cada QR suma una sola vez.'; }
+  if (tipo === 'ok' && (!o.sub || o.sub === '¡Sigue buscando!')) o.sub = '¡Sigue sumando puntos!';
   verEscena(tipo);
   var h = '<div class="estado grande ' + tipo + '" role="status">' +
+    (tipo === 'ok' ? '<span class="timbre" aria-hidden="true">🎄</span>' : '') +
     '<div class="ico">' + (ICONOS[tipo] || '⭐') + '</div>' +
     '<div><div class="t">' + esc(o.titulo || '') + '</div>' +
     (o.sub ? '<div class="s">' + esc(o.sub) + '</div>' : '') + '</div></div>';

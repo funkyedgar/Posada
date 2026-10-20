@@ -19,6 +19,9 @@ body{margin:0;min-height:100vh;font-family:Nunito,system-ui,sans-serif;color:var
   background:radial-gradient(ellipse 120% 50% at 50% 0%,#1a6b47 0%,var(--pino2) 45%,var(--pino) 100%) no-repeat,var(--pino)}
 .marco{max-width:1000px;margin:0 auto}
 
+/* Fuegos artificiales */
+#fuegos{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
 /* Nieve */
 #nieve{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .copo{position:absolute;top:-12px;color:#fff;opacity:.85;animation:nevar linear infinite}
@@ -118,6 +121,7 @@ tr.top td{background:#fdf3dc}
 </style>
 </head>
 <body>
+<canvas id="fuegos" aria-hidden="true"></canvas>
 <div id="nieve" aria-hidden="true"></div>
 <svg class="esferas" id="esferas" viewBox="0 0 1000 110" aria-hidden="true"></svg>
 <main class="marco" id="app"><div class="aviso"><p>Cargando resultados…</p></div></main>
@@ -250,7 +254,62 @@ function nieve() {
   }
 }
 
+// Fuegos artificiales navideños de fondo
+function fuegos() {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cv = document.getElementById('fuegos'), cx = cv.getContext('2d');
+  var W, H, dpr = Math.min(window.devicePixelRatio || 1, 2), G = 0.06;
+  var C = ['#ff4d4d', '#f2c14e', '#ffffff', '#2fd17a', '#ffd98a', '#ff8fa0', '#c8102e'];
+  var cohetes = [], chispas = [];
+  function tam() { W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  tam(); addEventListener('resize', tam);
+
+  function lanzar() {
+    var meta = H * (0.1 + Math.random() * 0.35);
+    cohetes.push({ x: W * (0.08 + Math.random() * 0.84), y: H, vx: (Math.random() - 0.5) * 1.2,
+      vy: -Math.sqrt(2 * G * (H - meta)), c: C[Math.floor(Math.random() * C.length)] });
+  }
+  function explotar(k) {
+    var n = 60 + Math.floor(Math.random() * 30), c2 = C[Math.floor(Math.random() * C.length)];
+    for (var i = 0; i < n; i++) {
+      var a = Math.PI * 2 * i / n + Math.random() * 0.2, v = 2.5 + Math.random() * 3.5;
+      chispas.push({ x: k.x, y: k.y, px: k.x, py: k.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+        vida: 1, baja: 0.010 + Math.random() * 0.012, c: Math.random() < 0.7 ? k.c : c2 });
+    }
+  }
+  function cuadro() {
+    cx.clearRect(0, 0, W, H);
+    cx.globalCompositeOperation = 'lighter';
+    for (var i = cohetes.length - 1; i >= 0; i--) {
+      var k = cohetes[i];
+      k.x += k.vx; k.y += k.vy; k.vy += G;
+      cx.fillStyle = k.c; cx.beginPath(); cx.arc(k.x, k.y, 2.2, 0, 7); cx.fill();
+      cx.fillStyle = 'rgba(255,220,150,.35)'; cx.beginPath(); cx.arc(k.x - k.vx * 3, k.y - k.vy * 3, 1.6, 0, 7); cx.fill();
+      if (k.vy >= -0.4) { explotar(k); cohetes.splice(i, 1); }
+    }
+    for (var j = chispas.length - 1; j >= 0; j--) {
+      var s = chispas[j];
+      s.px = s.x; s.py = s.y;
+      s.vx *= 0.985; s.vy = s.vy * 0.985 + G * 0.6;
+      s.x += s.vx; s.y += s.vy; s.vida -= s.baja;
+      if (s.vida <= 0) { chispas.splice(j, 1); continue; }
+      cx.globalAlpha = Math.max(s.vida, 0);
+      cx.strokeStyle = s.c; cx.lineWidth = 2.6;
+      cx.beginPath(); cx.moveTo(s.px, s.py); cx.lineTo(s.x, s.y); cx.stroke();
+    }
+    cx.globalAlpha = 1;
+    requestAnimationFrame(cuadro);
+  }
+  function programar() {
+    if (!document.hidden) { lanzar(); if (Math.random() < 0.35) setTimeout(lanzar, 250); }
+    setTimeout(programar, 900 + Math.random() * 1300);
+  }
+  requestAnimationFrame(cuadro);
+  programar();
+}
+
 esferas();
+fuegos();
 nieve();
 cargar();
 timer = setInterval(cargar, CADA_SEGUNDOS * 1000);
