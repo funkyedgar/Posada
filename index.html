@@ -717,7 +717,7 @@ function resultado(o) {
 }
 
 function enviar(nombre, opcion) {
-  revisando(nombre ? 'Santa está anotando tu apodo en su lista' : 'Santa está revisando tu código QR');
+  revisando(nombre ? 'Santa está anotando tu apodo en su lista' : 'Santa está revisando el QR');
   servidor('escanear', [D.codigo, clave(), nombre || '', opcion || ''], function (o) {
     o = o || {};
     if (o.nuevaClave) guardarClave(o.nuevaClave);   // este celular adopta la cuenta recuperada
