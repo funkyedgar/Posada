@@ -5,7 +5,7 @@
 <title>Posada</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Saira+Condensed:wght@700&family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --pino:#0c3b29; --pino2:#0f4d32; --hoja:#2f9e62; --hoja2:#1f7a4d;
@@ -94,6 +94,7 @@ body.blanca .nota{color:var(--suave)}
 @keyframes pulso{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-6px);opacity:1}}
 
 .hero{text-align:center;margin:0 0 20px}
+.separador{height:24px}
 .hero .lugar{font-family:"Mountains of Christmas",cursive;color:var(--oro);font-size:30px;margin:0;line-height:1}
 .hero h1{font-family:"Mountains of Christmas",cursive;font-weight:700;font-size:clamp(36px,11vw,52px);line-height:1;
   margin:4px 0 0;text-shadow:0 3px 0 var(--rojo2);text-wrap:balance}
@@ -185,11 +186,45 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
 
 <svg class="esferas" viewBox="0 0 360 86" aria-hidden="true" id="esferas"></svg>
 
+<!-- Letrero del Polo Norte (se reutiliza en todas las escenas) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="poste" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <rect width="10" height="10" fill="#fff"/><rect width="5" height="10" fill="#c8102e"/>
+    </pattern>
+    <linearGradient id="madera" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a86b3c"/><stop offset="1" stop-color="#7d4a25"/>
+    </linearGradient>
+    <symbol id="letrero" viewBox="-92 0 452 238">
+      <rect x="-37" y="34" width="12" height="186" rx="3" fill="url(#poste)" stroke="#b30d26" stroke-width="1"/>
+      <circle cx="-31" cy="32" r="9" fill="#f2c14e" stroke="#d4a63a" stroke-width="2"/>
+      <g transform="rotate(-5 -31 74)">
+        <path d="M-86 52 H18 L30 74 L18 96 H-86 Z" fill="url(#madera)" stroke="#5e3519" stroke-width="2"/>
+        <path d="M-80 60 H10 M-80 88 H12" stroke="#6b3e1f" stroke-width="1" opacity=".45"/>
+        <circle cx="-79" cy="74" r="2" fill="#4a2a14"/><circle cx="20" cy="74" r="2" fill="#4a2a14"/>
+        <path d="M-88 54 Q-84 44 -74 50 Q-66 42 -56 50 Q-46 43 -36 50 Q-26 42 -16 50 Q-6 44 4 50 Q12 45 18 52 L18 56 H-88Z" fill="#fff"/>
+        <text id="ltr1" x="-34" y="83" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="25"
+          letter-spacing="2" fill="#fff" style="paint-order:stroke" stroke="#4a2a14" stroke-width="2"></text>
+      </g>
+      <g transform="rotate(4 -31 128)">
+        <path d="M-82 108 H24 L36 129 L24 150 H-82 Z" fill="url(#madera)" stroke="#5e3519" stroke-width="2"/>
+        <path d="M-76 116 H18 M-76 142 H20" stroke="#6b3e1f" stroke-width="1" opacity=".45"/>
+        <circle cx="-75" cy="129" r="2" fill="#4a2a14"/><circle cx="26" cy="129" r="2" fill="#4a2a14"/>
+        <path d="M-84 110 Q-80 101 -70 106 Q-60 99 -50 106 Q-40 100 -30 106 Q-20 99 -10 106 Q0 100 10 106 Q18 101 24 108 L24 112 H-84Z" fill="#fff"/>
+        <text id="ltr2" x="-27" y="137" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="22"
+          letter-spacing="1.2" fill="#fff" style="paint-order:stroke" stroke="#4a2a14" stroke-width="2"></text>
+      </g>
+      <ellipse cx="-31" cy="214" rx="20" ry="7" fill="#fff"/>
+    </symbol>
+  </defs>
+</svg>
+
 <main class="hoja">
-  <svg class="escena" id="escena-normal" viewBox="0 0 360 238" role="img" aria-label="Santa Claus saludando junto a un pino navideño y un reno">
+  <svg class="escena" id="escena-normal" viewBox="-92 0 452 238" role="img" aria-label="Santa Claus saludando junto a un pino navideño y un reno">
     <!-- Suelo nevado -->
-    <ellipse cx="180" cy="222" rx="178" ry="15" fill="#fffaf3"/>
-    <ellipse cx="180" cy="219" rx="150" ry="7" fill="#e7f0f5"/>
+    <ellipse cx="134" cy="222" rx="224" ry="15" fill="#fffaf3"/>
+    <ellipse cx="134" cy="219" rx="194" ry="7" fill="#e7f0f5"/>
+    <use href="#letrero" x="-92" y="0" width="452" height="238"/>
 
     <!-- Reno -->
     <g class="reno">
@@ -279,9 +314,10 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
     </g></g>
   </svg>
 
-  <svg class="escena" id="escena-repetido" viewBox="0 0 360 238" role="img" aria-label="Muñeco de nieve gruñón negando con la cabeza" style="display:none">
-    <ellipse cx="180" cy="222" rx="178" ry="15" fill="#fffaf3"/>
-    <ellipse cx="180" cy="219" rx="150" ry="7" fill="#e7f0f5"/>
+  <svg class="escena" id="escena-repetido" viewBox="-92 0 452 238" role="img" aria-label="Muñeco de nieve gruñón negando con la cabeza" style="display:none">
+    <ellipse cx="134" cy="222" rx="224" ry="15" fill="#fffaf3"/>
+    <ellipse cx="134" cy="219" rx="194" ry="7" fill="#e7f0f5"/>
+    <use href="#letrero" x="-92" y="0" width="452" height="238"/>
     <!-- Regalos -->
     <g class="mono-regalos">
       <rect x="62" y="186" width="34" height="32" rx="3" fill="#c8102e"/>
@@ -324,9 +360,10 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
     </g>
   </svg>
 
-  <svg class="escena" id="escena-ok" viewBox="0 0 360 238" role="img" aria-label="Niños saltando de emoción junto al pino" style="display:none">
-    <ellipse cx="180" cy="222" rx="178" ry="15" fill="#fffaf3"/>
-    <ellipse cx="180" cy="219" rx="150" ry="7" fill="#e7f0f5"/>
+  <svg class="escena" id="escena-ok" viewBox="-92 0 452 238" role="img" aria-label="Niños saltando de emoción junto al pino" style="display:none">
+    <ellipse cx="134" cy="222" rx="224" ry="15" fill="#fffaf3"/>
+    <ellipse cx="134" cy="219" rx="194" ry="7" fill="#e7f0f5"/>
+    <use href="#letrero" x="-92" y="0" width="452" height="238"/>
     <g>
       <rect x="174" y="198" width="12" height="18" rx="2" fill="#6b3e26"/>
       <polygon points="146,202 214,202 180,150" fill="#2f9e62"/>
@@ -345,9 +382,10 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
     <g id="ninos"></g>
   </svg>
 
-  <svg class="escena" id="escena-leyendo" viewBox="0 0 360 238" role="img" aria-label="Santa Claus leyendo tu código junto a un duende" style="display:none">
-    <ellipse cx="180" cy="222" rx="178" ry="15" fill="#fffaf3"/>
-    <ellipse cx="180" cy="219" rx="150" ry="7" fill="#e7f0f5"/>
+  <svg class="escena" id="escena-leyendo" viewBox="-92 0 452 238" role="img" aria-label="Santa Claus leyendo tu código junto a un duende" style="display:none">
+    <ellipse cx="134" cy="222" rx="224" ry="15" fill="#fffaf3"/>
+    <ellipse cx="134" cy="219" rx="194" ry="7" fill="#e7f0f5"/>
+    <use href="#letrero" x="-92" y="0" width="452" height="238"/>
 
     <!-- Duende con la lista -->
     <g class="duende">
@@ -431,9 +469,8 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
     </g>
   </svg>
 
-  <header class="hero">
-    <h1 id="t2"></h1>
-  </header>
+  <header class="hero" hidden><h1 id="t2"></h1></header>
+  <div class="separador" aria-hidden="true"></div>
   <div id="app"><div class="cargando">Cargando…</div></div>
 </main>
 
@@ -503,6 +540,8 @@ function servidor(fn, args, ok) {
 function ponerEvento(t) {
   D.evento = t;
   document.getElementById('t2').textContent = t;
+  ponerLetrero(t);
+  try { localStorage.setItem('posada_evento', t); } catch (e) {}
   document.title = t;
 }
 
@@ -543,6 +582,7 @@ function nieve() {
 
 /* ---------- Pantallas ---------- */
 function bienvenida(conQR, error) {
+  verEscena('normal');
   poner(
     '<section class="tarjeta">' +
       '<h2>¡Bienvenido a la posada!</h2>' +
@@ -599,6 +639,19 @@ function tarjeta(r) {
     '<div class="puntos"><span class="num" id="pn">' + Number(r.total || 0) + '</span>' +
     '<span class="unidad">puntos acumulados</span></div>' +
     (r.id ? '<p class="id-jugador">Tu ID de jugador: <b>' + esc(r.id) + '</b></p>' : '') + '</section>';
+}
+
+// Escribe el nombre de la posada en el letrero: primera palabra arriba, el resto abajo
+function ponerLetrero(t) {
+  var p = String(t || '').trim().toUpperCase().split(/\s+/);
+  var arriba = p.shift() || '', abajo = p.join(' ');
+  [['ltr1', arriba, 25, 2, 92], ['ltr2', abajo, 22, 1.2, 96]].forEach(function (x) {
+    var el = document.getElementById(x[0]), n = x[1].length;
+    var fs = x[2], ancho = n * (fs * 0.5 + x[3]);
+    if (ancho > x[4]) fs = Math.max(11, fs * x[4] / ancho);
+    el.textContent = x[1];
+    el.setAttribute('font-size', fs.toFixed(1));
+  });
 }
 
 // Cambia la escena de arriba:
@@ -729,6 +782,7 @@ function enviar(nombre, opcion) {
 
 // Ese apodo ya existe: preguntar si es de esta persona
 function confirmarCuenta(apodo, candidatos) {
+  verEscena('normal');
   var c = candidatos[0] || {};
   poner('<section class="tarjeta">' +
     '<h2>Ese apodo ya está registrado</h2>' +
@@ -779,6 +833,7 @@ function contador(a, b) {
 }
 
 /* ---------- Arranque ---------- */
+try { var ev = localStorage.getItem('posada_evento'); if (ev) ponerEvento(ev); } catch (e) {}
 esferas();
 dibujarNinos();
 if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) nieve();
