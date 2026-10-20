@@ -19,18 +19,37 @@ body{margin:0;min-height:100vh;font-family:Nunito,system-ui,sans-serif;color:var
   background:radial-gradient(ellipse 120% 50% at 50% 0%,#1a6b47 0%,var(--pino2) 45%,var(--pino) 100%) no-repeat,var(--pino)}
 .marco{max-width:1000px;margin:0 auto}
 
-/* Guirnalda de luces */
-.luces{display:flex;justify-content:space-between;max-width:1000px;margin:0 auto;padding:14px 4px 0}
-.luces i{width:12px;height:18px;border-radius:50% 50% 45% 45%;animation:parpadeo 1.4s ease-in-out infinite}
-.luces i:nth-child(4n+1){background:#ff4d4d}.luces i:nth-child(4n+2){background:var(--oro);animation-delay:.35s}
-.luces i:nth-child(4n+3){background:#7fd3ff;animation-delay:.7s}.luces i:nth-child(4n){background:var(--hoja);animation-delay:1.05s}
-@keyframes parpadeo{0%,100%{opacity:1;box-shadow:0 0 10px currentColor}50%{opacity:.35}}
+/* Nieve */
+#nieve{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.copo{position:absolute;top:-12px;color:#fff;opacity:.85;animation:nevar linear infinite}
+@keyframes nevar{to{transform:translate(var(--dx),105vh) rotate(360deg)}}
+.marco{position:relative;z-index:1}
+
+/* Esferas colgantes */
+.esferas{display:block;width:100%;max-width:1000px;height:auto;margin:0 auto;position:relative;z-index:1}
+.esfera{transform-box:view-box;animation:columpio 3.6s ease-in-out infinite}
+@keyframes columpio{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+
+/* Personajes del podio */
+.personaje{height:130px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:6px}
+.p1 .personaje{height:160px}
+.p3 .personaje{height:150px}
+.mono-podio{height:100%;width:auto;max-width:100%;overflow:visible}
+.santa-cuerpo{animation:rebote 1.6s ease-in-out infinite}
+@keyframes rebote{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.mano{transform-box:fill-box;transform-origin:50% 100%;animation:saludo .7s ease-in-out infinite alternate}
+@keyframes saludo{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+.cabeza{transform-box:fill-box;transform-origin:20% 100%;animation:asiente 2.4s ease-in-out infinite}
+@keyframes asiente{0%,100%{transform:rotate(0)}30%{transform:rotate(-6deg)}60%{transform:rotate(3deg)}}
+.mono-cabeza{transform-box:fill-box;transform-origin:50% 90%;animation:balancea 1.6s ease-in-out infinite}
+@keyframes balancea{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+.mono{animation:rebote 1.3s ease-in-out infinite}
 
 header{text-align:center;margin:18px 0 22px}
 header h1{font-family:"Mountains of Christmas",cursive;font-size:clamp(38px,7vw,64px);line-height:1;margin:0;text-shadow:0 3px 0 var(--rojo2)}
 header p{margin:6px 0 0;color:#cfe5d8;font-size:16px}
 
-.cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
 .cifra{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.16);border-radius:18px;padding:14px 10px;text-align:center}
 .cifra b{display:block;font-size:clamp(26px,4.5vw,38px);font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
 .cifra span{font-size:14px;color:#cfe5d8}
@@ -40,20 +59,20 @@ header p{margin:6px 0 0;color:#cfe5d8;font-size:16px}
 .puesto{text-align:center;animation:sube .7s cubic-bezier(.2,1.3,.4,1) both}
 .puesto.p2{animation-delay:.15s}.puesto.p3{animation-delay:.3s}
 @keyframes sube{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-.medalla{width:72px;height:72px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;
-  font:900 30px Nunito,sans-serif;color:var(--tinta);border:4px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.35)}
-.p1 .medalla{width:92px;height:92px;font-size:38px;background:var(--oro)}
+.medalla{width:46px;height:46px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;
+  font:900 22px Nunito,sans-serif;color:var(--tinta);border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.p1 .medalla{width:56px;height:56px;font-size:26px;background:var(--oro)}
 .p2 .medalla{background:var(--plata)}
 .p3 .medalla{background:var(--bronce)}
 .p1 .corona{font-size:34px;line-height:1;margin-bottom:2px;animation:flota 2s ease-in-out infinite}
 @keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 .puesto .apodo{font-weight:900;font-size:clamp(17px,2.6vw,24px);word-break:break-word;line-height:1.15}
 .puesto .pts{font-family:"Mountains of Christmas",cursive;font-size:clamp(24px,4vw,36px);color:var(--oro);line-height:1.1}
-.base{margin-top:10px;border-radius:16px 16px 6px 6px;display:flex;align-items:flex-start;justify-content:center;padding-top:10px;
-  font:900 26px Nunito,sans-serif;color:rgba(255,255,255,.9)}
-.p1 .base{height:150px;background:linear-gradient(var(--rojo),var(--rojo2));border-top:6px solid var(--oro)}
-.p2 .base{height:105px;background:linear-gradient(#2f9e62,#1f7a4d);border-top:6px solid var(--plata)}
-.p3 .base{height:75px;background:linear-gradient(#2f9e62,#1f7a4d);border-top:6px solid var(--bronce)}
+.base{margin-top:10px;border-radius:16px 16px 6px 6px;display:flex;align-items:flex-start;justify-content:center;padding-top:12px;
+  font:900 28px Nunito,sans-serif}
+.p1 .base{height:150px;background:linear-gradient(#f8d3d6,#eeb1b7);color:#a3172c;border-top:6px solid var(--oro)}
+.p2 .base{height:105px;background:linear-gradient(#f0dcc4,#ddbf9c);color:#6b4220;border-top:6px solid var(--plata)}
+.p3 .base{height:75px;background:linear-gradient(#f2f8fc,#d6e6f1);color:#33536b;border-top:6px solid var(--bronce)}
 .vacio .medalla{background:rgba(255,255,255,.15);color:#fff}
 .vacio .apodo,.vacio .pts{opacity:.5}
 
@@ -88,8 +107,9 @@ tr.top td{background:#fdf3dc}
 @media (max-width:640px){
   .cifras{gap:8px}
   .podio{gap:8px}
-  .medalla{width:56px;height:56px;font-size:24px}
-  .p1 .medalla{width:70px;height:70px;font-size:30px}
+  .medalla{width:38px;height:38px;font-size:18px}
+  .p1 .medalla{width:46px;height:46px;font-size:22px}
+  .personaje{height:90px}.p1 .personaje{height:110px}.p3 .personaje{height:104px}
   .p1 .base{height:110px}.p2 .base{height:80px}.p3 .base{height:58px}
   td.c,th.c{display:none}
   td{padding:10px;font-size:16px}
@@ -98,9 +118,8 @@ tr.top td{background:#fdf3dc}
 </style>
 </head>
 <body>
-<div class="luces" aria-hidden="true">
-  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-</div>
+<div id="nieve" aria-hidden="true"></div>
+<svg class="esferas" id="esferas" viewBox="0 0 1000 110" aria-hidden="true"></svg>
 <main class="marco" id="app"><div class="aviso"><p>Cargando resultados…</p></div></main>
 
 <script>
@@ -141,10 +160,13 @@ function cargar() {
     });
 }
 
+var PERSONAJES = {"1": "<svg class=\"mono-podio\" viewBox=\"246 82 82 138\" role=\"img\" aria-label=\"Santa Claus\"><g class=\"santa\"><g class=\"santa-cuerpo\">\n      <rect x=\"268\" y=\"204\" width=\"14\" height=\"13\" rx=\"4\" fill=\"#222\"/>\n      <rect x=\"288\" y=\"204\" width=\"14\" height=\"13\" rx=\"4\" fill=\"#222\"/>\n      <ellipse cx=\"259\" cy=\"180\" rx=\"8\" ry=\"15\" fill=\"#c8102e\" transform=\"rotate(14 259 180)\"/>\n      <circle cx=\"255\" cy=\"194\" r=\"6.5\" fill=\"#1f7a4d\"/>\n      <ellipse cx=\"285\" cy=\"180\" rx=\"28\" ry=\"31\" fill=\"#c8102e\"/>\n      <rect x=\"259\" y=\"198\" width=\"52\" height=\"8\" rx=\"4\" fill=\"#fff\"/>\n      <rect x=\"282\" y=\"150\" width=\"6\" height=\"48\" fill=\"#fff\"/>\n      <rect x=\"257\" y=\"176\" width=\"56\" height=\"9\" fill=\"#222\"/>\n      <rect x=\"278\" y=\"174\" width=\"14\" height=\"13\" rx=\"2\" fill=\"none\" stroke=\"#f2c14e\" stroke-width=\"3\"/>\n      <g class=\"mano\">\n        <rect x=\"303\" y=\"130\" width=\"12\" height=\"34\" rx=\"6\" fill=\"#c8102e\"/>\n        <rect x=\"302\" y=\"133\" width=\"14\" height=\"6\" rx=\"3\" fill=\"#fff\"/>\n        <circle cx=\"309\" cy=\"127\" r=\"7.5\" fill=\"#1f7a4d\"/>\n      </g>\n      <circle cx=\"285\" cy=\"128\" r=\"18\" fill=\"#f6c9a8\"/>\n      <circle cx=\"275\" cy=\"133\" r=\"4\" fill=\"#f4a3a0\" opacity=\".7\"/><circle cx=\"295\" cy=\"133\" r=\"4\" fill=\"#f4a3a0\" opacity=\".7\"/>\n      <path d=\"M266 130 Q267 162 285 168 Q303 162 304 130 Q296 142 285 142 Q274 142 266 130Z\" fill=\"#fff\"/>\n      <ellipse cx=\"279\" cy=\"139\" rx=\"7.5\" ry=\"4\" fill=\"#fff\"/><ellipse cx=\"291\" cy=\"139\" rx=\"7.5\" ry=\"4\" fill=\"#f4f4f4\"/>\n      <circle cx=\"285\" cy=\"134\" r=\"3.6\" fill=\"#e88f7a\"/>\n      <circle cx=\"279\" cy=\"126\" r=\"2.1\" fill=\"#222\"/><circle cx=\"291\" cy=\"126\" r=\"2.1\" fill=\"#222\"/>\n      <path d=\"M268 117 Q284 84 314 102 L302 118Z\" fill=\"#c8102e\"/>\n      <rect x=\"264\" y=\"111\" width=\"42\" height=\"10\" rx=\"5\" fill=\"#fff\"/>\n      <circle cx=\"315\" cy=\"104\" r=\"7\" fill=\"#fff\"/>\n    </g></g></svg>", "2": "<svg class=\"mono-podio\" viewBox=\"34 96 100 122\" role=\"img\" aria-label=\"Reno\"><g class=\"reno\">\n      <ellipse cx=\"44\" cy=\"171\" rx=\"6\" ry=\"5\" fill=\"#fff\"/>\n      <rect x=\"50\" y=\"184\" width=\"6\" height=\"30\" rx=\"3\" fill=\"#6b4220\"/>\n      <rect x=\"60\" y=\"186\" width=\"6\" height=\"28\" rx=\"3\" fill=\"#7a4c26\"/>\n      <rect x=\"80\" y=\"186\" width=\"6\" height=\"28\" rx=\"3\" fill=\"#7a4c26\"/>\n      <rect x=\"90\" y=\"184\" width=\"6\" height=\"30\" rx=\"3\" fill=\"#6b4220\"/>\n      <ellipse cx=\"72\" cy=\"178\" rx=\"31\" ry=\"17\" fill=\"#8b5a2b\"/>\n      <ellipse cx=\"74\" cy=\"184\" rx=\"20\" ry=\"8\" fill=\"#c08a52\"/>\n      <g class=\"cabeza\">\n        <polygon points=\"86,176 98,146 110,150 100,180\" fill=\"#8b5a2b\"/>\n        <path d=\"M104 132 L97 112 M100 121 L91 116 M97 112 L93 103 M113 132 L117 110 M115 120 L124 114 M117 110 L121 101\"\n              stroke=\"#d9b07a\" stroke-width=\"3.2\" stroke-linecap=\"round\" fill=\"none\"/>\n        <ellipse cx=\"98\" cy=\"134\" rx=\"7\" ry=\"3.5\" fill=\"#6b4220\" transform=\"rotate(-25 98 134)\"/>\n        <ellipse cx=\"110\" cy=\"142\" rx=\"14\" ry=\"10.5\" fill=\"#8b5a2b\"/>\n        <ellipse cx=\"122\" cy=\"147\" rx=\"7.5\" ry=\"6.5\" fill=\"#c08a52\"/>\n        <circle cx=\"128\" cy=\"145\" r=\"3.6\" fill=\"#3a2a1a\"/>\n        <circle cx=\"108\" cy=\"138\" r=\"2.2\" fill=\"#1d1d1d\"/>\n        <circle cx=\"108.8\" cy=\"137.2\" r=\".7\" fill=\"#fff\"/>\n        <path d=\"M89 168 Q98 176 107 164\" stroke=\"#c8102e\" stroke-width=\"6\" stroke-linecap=\"round\" fill=\"none\"/>\n        <circle cx=\"98\" cy=\"175\" r=\"4\" fill=\"#f2c14e\"/>\n      </g>\n    </g></svg>", "3": "<svg class=\"mono-podio\" viewBox=\"122 16 116 210\" role=\"img\" aria-label=\"Muñeco de nieve\"><g class=\"mono\">\n      <circle cx=\"180\" cy=\"180\" r=\"42\" fill=\"#fff\" stroke=\"#d6e4ee\" stroke-width=\"3\"/>\n      <circle cx=\"180\" cy=\"122\" r=\"30\" fill=\"#fff\" stroke=\"#d6e4ee\" stroke-width=\"3\"/>\n      <circle cx=\"180\" cy=\"114\" r=\"3\" fill=\"#2a2a2a\"/><circle cx=\"180\" cy=\"127\" r=\"3\" fill=\"#2a2a2a\"/><circle cx=\"180\" cy=\"140\" r=\"3\" fill=\"#2a2a2a\"/>\n      <circle cx=\"180\" cy=\"168\" r=\"3.4\" fill=\"#2a2a2a\"/><circle cx=\"180\" cy=\"184\" r=\"3.4\" fill=\"#2a2a2a\"/>\n      <!-- Brazos arriba -->\n      <path d=\"M154 118 L132 90 M206 118 L228 90\" stroke=\"#6b3e26\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n      <path d=\"M132 90 L126 84 M132 90 L130 81 M228 90 L234 84 M228 90 L230 81\" stroke=\"#6b3e26\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n      <g class=\"mono-cabeza\">\n        <rect x=\"156\" y=\"94\" width=\"48\" height=\"10\" rx=\"5\" fill=\"#c8102e\"/>\n        <rect x=\"186\" y=\"98\" width=\"10\" height=\"26\" rx=\"4\" fill=\"#c8102e\"/>\n        <rect x=\"186\" y=\"110\" width=\"10\" height=\"4\" fill=\"#fff\"/>\n        <circle cx=\"180\" cy=\"74\" r=\"24\" fill=\"#fff\" stroke=\"#d6e4ee\" stroke-width=\"3\"/>\n        \n        <circle cx=\"172\" cy=\"71\" r=\"3\" fill=\"#2a2a2a\"/><circle cx=\"188\" cy=\"71\" r=\"3\" fill=\"#2a2a2a\"/>\n        <polygon points=\"180,76 204,81 180,84\" fill=\"#f28c28\"/>\n        <circle cx=\"170\" cy=\"86\" r=\"1.9\" fill=\"#2a2a2a\"/><circle cx=\"175\" cy=\"89.5\" r=\"1.9\" fill=\"#2a2a2a\"/>\n        <circle cx=\"180\" cy=\"91\" r=\"1.9\" fill=\"#2a2a2a\"/><circle cx=\"185\" cy=\"89.5\" r=\"1.9\" fill=\"#2a2a2a\"/>\n        <circle cx=\"190\" cy=\"86\" r=\"1.9\" fill=\"#2a2a2a\"/>\n        <rect x=\"153\" y=\"50\" width=\"54\" height=\"7\" rx=\"3\" fill=\"#1d1d1d\"/>\n        <rect x=\"162\" y=\"20\" width=\"36\" height=\"32\" rx=\"3\" fill=\"#1d1d1d\"/>\n        <rect x=\"162\" y=\"40\" width=\"36\" height=\"7\" fill=\"#c8102e\"/>\n        <path d=\"M194 40 l5 -6 l3 7z\" fill=\"#2f9e62\"/>\n      </g>\n    </g></svg>"};
+
 function puesto(j, n) {
   var clase = 'puesto p' + n + (j ? '' : ' vacio');
   return '<div class="' + clase + '">' +
     (n === 1 ? '<div class="corona" aria-hidden="true">👑</div>' : '') +
+    '<div class="personaje">' + PERSONAJES[n] + '</div>' +
     '<div class="medalla">' + n + '</div>' +
     '<div class="apodo">' + (j ? esc(j.apodo) : 'Por definir') + '</div>' +
     '<div class="pts">' + (j ? fmt(j.puntos) + ' pts' : '—') + '</div>' +
@@ -155,11 +177,6 @@ function pintar(o) {
   var js = o.jugadores || [], t = o.totales || {};
   document.title = 'Tablero · ' + (o.evento || 'Posada');
   var h = '<header><h1>' + esc(o.evento || 'Posada') + '</h1><p>Tablero de puntos</p></header>' +
-    '<section class="cifras">' +
-      '<div class="cifra"><b>' + fmt(t.jugadores) + '</b><span>jugadores</span></div>' +
-      '<div class="cifra"><b>' + fmt(t.escaneos) + '</b><span>códigos escaneados</span></div>' +
-      '<div class="cifra"><b>' + fmt(t.puntos) + '</b><span>puntos repartidos</span></div>' +
-    '</section>' +
     '<section class="podio" aria-label="Tres primeros lugares">' +
       puesto(js[1], 2) + puesto(js[0], 1) + puesto(js[2], 3) +
     '</section>' +
@@ -179,7 +196,13 @@ function pintar(o) {
     });
     h += '</tbody></table>';
   }
-  h += '</section><div class="pie"><span id="estado"></span><button id="ya">Actualizar ahora</button></div>';
+  h += '</section>' +
+    '<section class="cifras">' +
+      '<div class="cifra"><b>' + fmt(t.jugadores) + '</b><span>jugadores</span></div>' +
+      '<div class="cifra"><b>' + fmt(t.escaneos) + '</b><span>códigos escaneados</span></div>' +
+      '<div class="cifra"><b>' + fmt(t.puntos) + '</b><span>puntos repartidos</span></div>' +
+    '</section>' +
+    '<div class="pie"><span id="estado"></span><button id="ya">Actualizar ahora</button></div>';
   poner(h);
   ultimaVez = Date.now();
   reloj();
@@ -193,6 +216,42 @@ function reloj() {
   el.textContent = 'Actualizado hace ' + s + ' s · se actualiza solo cada ' + CADA_SEGUNDOS + ' s';
 }
 
+function esferas() {
+  var svg = document.getElementById('esferas'), h = '';
+  var col = ['#c8102e', '#f2c14e', '#2f9e62', '#ffffff', '#d9dde3'];
+  var largo = [22, 44, 18, 52, 26, 40, 16, 48, 24, 38, 20, 46, 28, 34, 18, 50, 22, 42];
+  for (var i = 0; i < 18; i++) {
+    var x = 28 + i * 55.5, L = largo[i], r = 12 + (i % 3) * 2.5, c = col[i % col.length], cy = L + 8 + r;
+    h += '<g class="esfera" style="transform-origin:' + x + 'px 0px;animation-delay:-' + (i * 0.4) + 's">' +
+      '<line x1="' + x + '" y1="0" x2="' + x + '" y2="' + (L + 2) + '" stroke="#f2c14e" stroke-width="1.2"/>' +
+      '<rect x="' + (x - 4) + '" y="' + L + '" width="8" height="8" rx="1.5" fill="#d4a63a"/>' +
+      '<circle cx="' + x + '" cy="' + cy + '" r="' + r + '" fill="' + c + '"/>' +
+      '<path d="M' + (x - r) + ' ' + cy + ' Q' + x + ' ' + (cy + r * 0.45) + ' ' + (x + r) + ' ' + cy + '" stroke="' +
+        (c === '#ffffff' ? '#c8102e' : '#ffffff') + '" stroke-opacity=".55" stroke-width="2" fill="none"/>' +
+      '<ellipse cx="' + (x - r * 0.38) + '" cy="' + (cy - r * 0.4) + '" rx="' + (r * 0.28) + '" ry="' + (r * 0.18) +
+        '" fill="#fff" opacity=".7" transform="rotate(-35 ' + (x - r * 0.38) + ' ' + (cy - r * 0.4) + ')"/></g>';
+  }
+  svg.innerHTML = h;
+}
+
+function nieve() {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cont = document.getElementById('nieve');
+  for (var i = 0; i < 60; i++) {
+    var c = document.createElement('div');
+    c.className = 'copo';
+    c.textContent = Math.random() < 0.4 ? '❄' : '•';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.fontSize = (8 + Math.random() * 16) + 'px';
+    c.style.setProperty('--dx', (Math.random() * 80 - 40) + 'px');
+    c.style.animationDuration = (8 + Math.random() * 9) + 's';
+    c.style.animationDelay = -(Math.random() * 17) + 's';
+    cont.appendChild(c);
+  }
+}
+
+esferas();
+nieve();
 cargar();
 timer = setInterval(cargar, CADA_SEGUNDOS * 1000);
 setInterval(reloj, 1000);
