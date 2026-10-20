@@ -104,8 +104,11 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
 .estado.ok{background:var(--rojo);border-color:var(--oro)}
 .estado.ok .t{text-shadow:0 2px 0 #5e0614,0 0 12px rgba(255,255,255,.35)}
 .estado.ok .ico{background:var(--oro)}
-.estado.repetido{border-color:var(--oro)}
-.estado.repetido .ico{background:var(--oro)}
+.estado.repetido{background:#f7ecd8;border-color:#e3c98f}
+.estado.repetido .t{color:var(--rojo);text-shadow:none}
+.estado.repetido .s{color:var(--rojo2);font-weight:700}
+.estado.repetido .ico{background:#fff;border:2px solid #f1d9d9}
+.estado .ico svg{width:42px;height:42px}
 .estado.expirado,.estado.agotado{background:rgba(0,0,0,.25);border-color:#ffffff55}
 .estado.grande{padding:22px 20px;margin:6px 0 16px}
 .estado.grande .t{font-size:34px}
@@ -465,7 +468,15 @@ function inicio(r, aviso, animar) {
   if (animar) contador(Number(r.desde || 0), Number(r.total || 0));
 }
 
-var ICONOS = { ok: '🎁', repetido: '🔔', expirado: '⏰', agotado: '🦌', invalido: '❓', error: '⚠️', hola: '🎅' };
+var TACHE = '<svg viewBox="0 0 40 40" aria-hidden="true"><defs><pattern id="baston" width="7" height="7" ' +
+  'patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#fff"/>' +
+  '<rect width="3.5" height="7" fill="#c8102e"/></pattern></defs>' +
+  '<rect x="16.5" y="3" width="7" height="34" rx="3.5" fill="url(#baston)" stroke="#c8102e" stroke-width="1.2" transform="rotate(45 20 20)"/>' +
+  '<rect x="16.5" y="3" width="7" height="34" rx="3.5" fill="url(#baston)" stroke="#c8102e" stroke-width="1.2" transform="rotate(-45 20 20)"/>' +
+  '<ellipse cx="14.5" cy="15" rx="5" ry="2.6" fill="#1f7a4d" transform="rotate(-30 14.5 15)"/>' +
+  '<ellipse cx="25.5" cy="15" rx="5" ry="2.6" fill="#2f9e62" transform="rotate(30 25.5 15)"/>' +
+  '<circle cx="18" cy="19" r="2.6" fill="#c8102e"/><circle cx="22" cy="19" r="2.6" fill="#9a0b22"/></svg>';
+var ICONOS = { ok: '🎁', repetido: TACHE, expirado: '⏰', agotado: '🦌', invalido: '❓', error: '⚠️', hola: '🎅' };
 var AVISOS = { ok: 'Último código', repetido: 'Ese código ya lo tenías', expirado: 'Ese código ya cerró',
                agotado: 'Ese código ya se agotó', invalido: 'Ese código no es válido para la dinámica' };
 
