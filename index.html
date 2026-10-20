@@ -76,6 +76,23 @@ body.blanca .hero h1{color:var(--rojo);text-shadow:0 3px 0 #f2c14e}
 body.blanca .copo{color:#a9c6dc}
 body.blanca .nota{color:var(--suave)}
 
+.santa-lee{animation:rebote 2s ease-in-out infinite}
+.carta{transform-box:fill-box;transform-origin:20% 80%;animation:lee 2.4s ease-in-out infinite}
+@keyframes lee{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}}
+.escaner{animation:escanea 1.3s ease-in-out infinite alternate}
+@keyframes escanea{from{transform:translateY(0)}to{transform:translateY(32px)}}
+.duende{animation:rebote 1.2s ease-in-out infinite}
+.duende-cabeza{transform-box:fill-box;transform-origin:50% 100%;animation:asiente 2s ease-in-out infinite}
+.duende-brazo{transform-box:fill-box;transform-origin:0% 10%;animation:lee 2s ease-in-out infinite}
+.revisando{text-align:center;padding:10px 0 30px}
+.revisando .t{font-family:"Mountains of Christmas",cursive;font-weight:700;font-size:30px;line-height:1.1;color:#fff;
+  text-shadow:0 2px 0 var(--rojo2)}
+.revisando .puntitos{display:inline-flex;gap:6px;margin-top:12px}
+.revisando .puntitos i{width:10px;height:10px;border-radius:50%;background:var(--oro);animation:pulso 1s ease-in-out infinite}
+.revisando .puntitos i:nth-child(2){background:#fff;animation-delay:.15s}
+.revisando .puntitos i:nth-child(3){background:var(--rojo);animation-delay:.3s}
+@keyframes pulso{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-6px);opacity:1}}
+
 .hero{text-align:center;margin:0 0 20px}
 .hero .lugar{font-family:"Mountains of Christmas",cursive;color:var(--oro);font-size:30px;margin:0;line-height:1}
 .hero h1{font-family:"Mountains of Christmas",cursive;font-weight:700;font-size:clamp(36px,11vw,52px);line-height:1;
@@ -321,6 +338,92 @@ label.campo{display:block;margin-top:20px;font-weight:800;font-size:15px}
     <g id="ninos"></g>
   </svg>
 
+  <svg class="escena" id="escena-leyendo" viewBox="0 0 360 238" role="img" aria-label="Santa Claus leyendo tu código junto a un duende" style="display:none">
+    <ellipse cx="180" cy="222" rx="178" ry="15" fill="#fffaf3"/>
+    <ellipse cx="180" cy="219" rx="150" ry="7" fill="#e7f0f5"/>
+
+    <!-- Duende con la lista -->
+    <g class="duende">
+      <path d="M92 214 Q96 206 104 208 L106 214Z M114 214 L116 208 Q124 206 128 214Z" fill="#c8102e"/>
+      <circle cx="92" cy="211" r="2" fill="#f2c14e"/><circle cx="128" cy="211" r="2" fill="#f2c14e"/>
+      <rect x="101" y="190" width="7" height="20" fill="#fff"/><rect x="112" y="190" width="7" height="20" fill="#fff"/>
+      <rect x="101" y="193" width="7" height="4" fill="#c8102e"/><rect x="112" y="193" width="7" height="4" fill="#c8102e"/>
+      <rect x="101" y="201" width="7" height="4" fill="#c8102e"/><rect x="112" y="201" width="7" height="4" fill="#c8102e"/>
+      <path d="M96 162 L124 162 L130 194 L124 190 L118 194 L112 190 L106 194 L100 190 L90 194Z" fill="#2f9e62"/>
+      <rect x="95" y="178" width="31" height="6" fill="#2a1d1f"/>
+      <rect x="106" y="176.5" width="9" height="9" rx="1.5" fill="none" stroke="#f2c14e" stroke-width="2"/>
+      <path d="M96 162 L101 168 L106 162 L111 168 L116 162 L121 168 L125 162Z" fill="#c8102e"/>
+      <path d="M97 168 Q86 178 90 186" stroke="#2f9e62" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <circle cx="90" cy="187" r="4.5" fill="#f6c9a8"/>
+      <g class="duende-brazo">
+        <path d="M123 168 Q134 170 138 164" stroke="#2f9e62" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <circle cx="139" cy="163" r="4.5" fill="#f6c9a8"/>
+        <rect x="134" y="160" width="16" height="50" rx="2" fill="#fff6e0" stroke="#e3cfa6" stroke-width="1.2"/>
+        <path d="M137 168 H147 M137 174 H146 M137 180 H147 M137 186 H145 M137 192 H147 M137 198 H144" stroke="#c9b48a" stroke-width="1.4"/>
+        <path d="M137 168 l1.5 1.5 l3 -3" stroke="#2f9e62" stroke-width="1.4" fill="none"/>
+        <path d="M137 180 l1.5 1.5 l3 -3" stroke="#2f9e62" stroke-width="1.4" fill="none"/>
+        <ellipse cx="142" cy="211" rx="9" ry="3.5" fill="#efdfbd" stroke="#e3cfa6" stroke-width="1"/>
+      </g>
+      <g class="duende-cabeza">
+        <polygon points="97,146 84,136 98,153" fill="#f6c9a8"/><polygon points="123,146 136,136 122,153" fill="#f6c9a8"/>
+        <circle cx="110" cy="149" r="14" fill="#f6c9a8"/>
+        <circle cx="102" cy="154" r="3" fill="#f4a3a0" opacity=".8"/><circle cx="118" cy="154" r="3" fill="#f4a3a0" opacity=".8"/>
+        <circle cx="105" cy="148" r="2" fill="#2a1d1f"/><circle cx="115" cy="148" r="2" fill="#2a1d1f"/>
+        <path d="M105 155 Q110 160 115 155" stroke="#8a2433" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M95 141 Q102 104 136 110 Q124 116 125 141Z" fill="#2f9e62"/>
+        <rect x="94" y="137" width="32" height="7" rx="3.5" fill="#c8102e"/>
+        <circle cx="137" cy="110" r="4.5" fill="#f2c14e"/>
+      </g>
+    </g>
+
+    <!-- Santa leyendo la carta -->
+    <g transform="translate(-60 0)">
+      <g class="santa-lee">
+        <rect x="268" y="204" width="14" height="13" rx="4" fill="#222"/>
+        <rect x="288" y="204" width="14" height="13" rx="4" fill="#222"/>
+        <ellipse cx="285" cy="180" rx="28" ry="31" fill="#c8102e"/>
+        <rect x="259" y="198" width="52" height="8" rx="4" fill="#fff"/>
+        <rect x="282" y="150" width="6" height="48" fill="#fff"/>
+        <rect x="257" y="176" width="56" height="9" fill="#222"/>
+        <rect x="278" y="174" width="14" height="13" rx="2" fill="none" stroke="#f2c14e" stroke-width="3"/>
+        <circle cx="285" cy="128" r="18" fill="#f6c9a8"/>
+        <circle cx="275" cy="133" r="4" fill="#f4a3a0" opacity=".7"/><circle cx="295" cy="133" r="4" fill="#f4a3a0" opacity=".7"/>
+        <path d="M266 130 Q267 162 285 168 Q303 162 304 130 Q296 142 285 142 Q274 142 266 130Z" fill="#fff"/>
+        <ellipse cx="279" cy="139" rx="7.5" ry="4" fill="#fff"/><ellipse cx="291" cy="139" rx="7.5" ry="4" fill="#f4f4f4"/>
+        <circle cx="285" cy="134" r="3.6" fill="#e88f7a"/>
+        <circle cx="281" cy="127" r="2.1" fill="#222"/><circle cx="293" cy="127" r="2.1" fill="#222"/>
+        <circle cx="280" cy="126.5" r="5.5" fill="none" stroke="#c9a24b" stroke-width="1.6"/>
+        <circle cx="292" cy="126.5" r="5.5" fill="none" stroke="#c9a24b" stroke-width="1.6"/>
+        <path d="M285.5 126 h1" stroke="#c9a24b" stroke-width="1.6"/>
+        <path d="M268 117 Q284 84 314 102 L302 118Z" fill="#c8102e"/>
+        <rect x="264" y="111" width="42" height="10" rx="5" fill="#fff"/>
+        <circle cx="315" cy="104" r="7" fill="#fff"/>
+        <!-- Carta con el código -->
+        <g class="carta">
+          <rect x="300" y="138" width="46" height="56" rx="3" fill="#fffaf0" stroke="#e3cfa6" stroke-width="1.4"/>
+          <path d="M300 141 Q296 138 300 135 H346 Q350 138 346 141" fill="#efdfbd"/>
+          <g fill="#2a1d1f">
+            <rect x="307" y="146" width="12" height="12"/><rect x="309.5" y="148.5" width="7" height="7" fill="#fffaf0"/><rect x="311.5" y="150.5" width="3" height="3"/>
+            <rect x="327" y="146" width="12" height="12"/><rect x="329.5" y="148.5" width="7" height="7" fill="#fffaf0"/><rect x="331.5" y="150.5" width="3" height="3"/>
+            <rect x="307" y="166" width="12" height="12"/><rect x="309.5" y="168.5" width="7" height="7" fill="#fffaf0"/><rect x="311.5" y="170.5" width="3" height="3"/>
+            <rect x="322" y="146" width="3" height="3"/><rect x="322" y="152" width="3" height="3"/><rect x="322" y="161" width="3" height="3"/>
+            <rect x="327" y="161" width="3" height="3"/><rect x="333" y="161" width="3" height="3"/><rect x="336" y="166" width="3" height="3"/>
+            <rect x="327" y="169" width="3" height="3"/><rect x="331" y="173" width="3" height="3"/><rect x="336" y="175" width="3" height="3"/>
+            <rect x="322" y="175" width="3" height="3"/><rect x="309" y="161" width="3" height="3"/><rect x="315" y="161" width="3" height="3"/>
+          </g>
+          <rect x="306" y="183" width="34" height="2" rx="1" fill="#c9b48a"/>
+          <rect x="306" y="188" width="24" height="2" rx="1" fill="#c9b48a"/>
+          <rect class="escaner" x="304" y="145" width="38" height="2.4" rx="1.2" fill="#c8102e" opacity=".75"/>
+        </g>
+        <ellipse cx="300" cy="172" rx="8" ry="14" fill="#c8102e" transform="rotate(-55 300 172)"/>
+        <circle cx="304" cy="182" r="6.5" fill="#1f7a4d"/>
+        <ellipse cx="268" cy="176" rx="8" ry="14" fill="#c8102e" transform="rotate(-20 268 176)"/>
+        <path d="M262 186 Q280 196 300 160" stroke="#c8102e" stroke-width="12" stroke-linecap="round" fill="none"/>
+        <circle cx="301" cy="158" r="6.5" fill="#1f7a4d"/>
+      </g>
+    </g>
+  </svg>
+
   <header class="hero">
     <h1 id="t2"></h1>
   </header>
@@ -366,6 +469,12 @@ function clave() {
 }
 
 function poner(h) { document.getElementById('app').innerHTML = h; }
+// Pantalla de espera mientras se valida el código: Santa lee la carta y el duende revisa la lista
+function revisando(txt) {
+  verEscena('leyendo');
+  poner('<div class="revisando" role="status"><div class="t">' + esc(txt) + '…</div>' +
+    '<div class="puntitos" aria-hidden="true"><i></i><i></i><i></i></div></div>');
+}
 function cargando(txt) { poner('<div class="cargando">' + (txt || 'Un momento…') + '</div>'); }
 
 // Llama al Apps Script y recibe la respuesta en JSON
@@ -488,8 +597,8 @@ function tarjeta(r) {
 // Cambia la escena de arriba:
 //  'repetido' → muñeco de nieve | 'ok' → niños saltando con fondo blanco | otro → Santa, pino y reno
 function verEscena(cual) {
-  var esc = cual === 'repetido' || cual === 'ok' ? cual : 'normal';
-  ['normal', 'repetido', 'ok'].forEach(function (n) {
+  var esc = cual === 'repetido' || cual === 'ok' || cual === 'leyendo' ? cual : 'normal';
+  ['normal', 'repetido', 'ok', 'leyendo'].forEach(function (n) {
     document.getElementById('escena-' + n).style.display = n === esc ? 'block' : 'none';
   });
   document.body.classList.toggle('blanca', esc === 'ok');
@@ -600,7 +709,7 @@ function resultado(o) {
 }
 
 function enviar(nombre, opcion) {
-  cargando(nombre ? 'Registrando…' : 'Leyendo tu código…');
+  revisando(nombre ? 'Santa está anotando tu apodo en su lista' : 'Santa está revisando tu código QR');
   servidor('escanear', [D.codigo, clave(), nombre || '', opcion || ''], function (o) {
     o = o || {};
     if (o.nuevaClave) guardarClave(o.nuevaClave);   // este celular adopta la cuenta recuperada
