@@ -85,8 +85,8 @@ body.blanca .nota{color:var(--suave)}
 .duende-cabeza{transform-box:fill-box;transform-origin:50% 100%;animation:asiente 2s ease-in-out infinite}
 .duende-brazo{transform-box:fill-box;transform-origin:0% 10%;animation:lee 2s ease-in-out infinite}
 .revisando{text-align:center;padding:10px 0 30px}
-.revisando .t{font-family:"Mountains of Christmas",cursive;font-weight:700;font-size:30px;line-height:1.1;color:#fff;
-  text-shadow:0 2px 0 var(--rojo2)}
+.revisando .t{font-family:Nunito,system-ui,sans-serif;font-weight:800;font-size:22px;line-height:1.35;color:#fff;
+  letter-spacing:.2px;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 .revisando .puntitos{display:inline-flex;gap:6px;margin-top:12px}
 .revisando .puntitos i{width:10px;height:10px;border-radius:50%;background:var(--oro);animation:pulso 1s ease-in-out infinite}
 .revisando .puntitos i:nth-child(2){background:#fff;animation-delay:.15s}
@@ -539,11 +539,11 @@ function bienvenida(conQR, error) {
   poner(
     '<section class="tarjeta">' +
       '<h2>¡Bienvenido a la posada!</h2>' +
-      '<p>Busca los códigos QR escondidos en la fiesta. Cada uno te da puntos que puedes cambiar por premios.</p>' +
+      '<p>Escanea todos los códigos QR que puedas. Cada uno te da puntos que puedes cambiar por premios.</p>' +
       '<label class="campo" for="n">Elige tu apodo</label>' +
-      '<input id="n" maxlength="20" placeholder="Ej. funkyedgar" autocomplete="off" autocapitalize="none" ' +
+      '<input id="n" maxlength="12" placeholder="Escribe tu apodo" autocomplete="off" autocapitalize="none" ' +
         'autocorrect="off" spellcheck="false" enterkeyhint="go">' +
-      '<p class="ayuda" id="ayuda">' + (error ? esc(error) : 'De 3 a 20 letras o números, sin espacios.') + '</p>' +
+      '<p class="ayuda" id="ayuda">' + (error ? esc(error) : 'De 4 a 12 letras o números, sin espacios.') + '</p>' +
       '<button class="boton" id="btn">' + (conQR ? '🎁 Unirme y sumar puntos' : '🎁 Unirme al juego') + '</button>' +
       (conQR ? '<p class="extra">Al unirte se suman los puntos de este código.</p>' : '') +
       '<p class="extra">¿Ya tenías apodo? Escríbelo igual y recuperas tus puntos.</p>' +
@@ -558,11 +558,11 @@ function bienvenida(conQR, error) {
   var input = document.getElementById('n'), btn = document.getElementById('btn');
   var ayuda = document.getElementById('ayuda');
   if (error) ayuda.className = 'ayuda error';
-  input.oninput = function () { input.value = input.value.replace(/\s+/g, ''); };
+  input.oninput = function () { input.value = input.value.replace(/[^A-Za-z0-9ÁÉÍÓÚÜÑáéíóúüñ]/g, ''); };
   function enviarNombre() {
     var nombre = input.value.trim();
-    if (!/^[A-Za-z0-9ÁÉÍÓÚÜÑáéíóúüñ_.\-]{3,20}$/.test(nombre)) {
-      ayuda.textContent = 'Usa de 3 a 20 letras o números, sin espacios. Puedes usar _ . -';
+    if (!/^[A-Za-z0-9ÁÉÍÓÚÜÑáéíóúüñ]{4,12}$/.test(nombre)) {
+      ayuda.textContent = 'Usa de 4 a 12 letras o números, sin espacios ni símbolos.';
       ayuda.className = 'ayuda error';
       input.focus();
       return;
@@ -676,12 +676,13 @@ var TACHE = '<svg viewBox="0 0 40 40" aria-hidden="true"><defs><pattern id="bast
   '<ellipse cx="25.5" cy="15" rx="5" ry="2.6" fill="#2f9e62" transform="rotate(30 25.5 15)"/>' +
   '<circle cx="18" cy="19" r="2.6" fill="#c8102e"/><circle cx="22" cy="19" r="2.6" fill="#9a0b22"/></svg>';
 var ICONOS = { ok: '🎁', repetido: TACHE, expirado: '⏰', agotado: '🦌', invalido: '❓', error: '⚠️', hola: '🎅' };
-var AVISOS = { ok: 'Último código', repetido: 'Ese código ya lo tenías', expirado: 'Ese código ya cerró',
+var AVISOS = { ok: 'Último código', repetido: 'Ese QR ya lo tenías', expirado: 'Ese código ya cerró',
                agotado: 'Ese código ya se agotó', invalido: 'Ese código no es válido para la dinámica' };
 
 // Muestra el resultado del escaneo unos segundos y luego lleva a la pantalla de puntos
 function resultado(o) {
   var tipo = o.tipo || 'hola';
+  if (tipo === 'repetido') { o.titulo = 'Ya tienes este QR'; o.sub = 'Cada QR suma una sola vez.'; }
   verEscena(tipo);
   var h = '<div class="estado grande ' + tipo + '" role="status">' +
     '<div class="ico">' + (ICONOS[tipo] || '⭐') + '</div>' +
