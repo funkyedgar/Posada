@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Tablero de puntos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pino:#0c3b29; --pino2:#0f4d32; --hoja:#2f9e62; --hoja2:#1f7a4d;
+  --rojo:#c8102e; --rojo2:#9a0b22; --oro:#f2c14e; --nieve:#fffaf3; --tinta:#2a1d1f; --suave:#6e5f61;
+  --plata:#c9d1d9; --bronce:#cd8b4e;
+}
+*{box-sizing:border-box}
+html{background:var(--pino)}
+body{margin:0;min-height:100vh;font-family:Nunito,system-ui,sans-serif;color:var(--nieve);padding:0 20px 40px;
+  background:radial-gradient(ellipse 120% 50% at 50% 0%,#1a6b47 0%,var(--pino2) 45%,var(--pino) 100%) no-repeat,var(--pino)}
+.marco{max-width:1000px;margin:0 auto}
+
+/* Guirnalda de luces */
+.luces{display:flex;justify-content:space-between;max-width:1000px;margin:0 auto;padding:14px 4px 0}
+.luces i{width:12px;height:18px;border-radius:50% 50% 45% 45%;animation:parpadeo 1.4s ease-in-out infinite}
+.luces i:nth-child(4n+1){background:#ff4d4d}.luces i:nth-child(4n+2){background:var(--oro);animation-delay:.35s}
+.luces i:nth-child(4n+3){background:#7fd3ff;animation-delay:.7s}.luces i:nth-child(4n){background:var(--hoja);animation-delay:1.05s}
+@keyframes parpadeo{0%,100%{opacity:1;box-shadow:0 0 10px currentColor}50%{opacity:.35}}
+
+header{text-align:center;margin:18px 0 22px}
+header h1{font-family:"Mountains of Christmas",cursive;font-size:clamp(38px,7vw,64px);line-height:1;margin:0;text-shadow:0 3px 0 var(--rojo2)}
+header p{margin:6px 0 0;color:#cfe5d8;font-size:16px}
+
+.cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.cifra{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.16);border-radius:18px;padding:14px 10px;text-align:center}
+.cifra b{display:block;font-size:clamp(26px,4.5vw,38px);font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
+.cifra span{font-size:14px;color:#cfe5d8}
+
+/* Podio */
+.podio{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:14px;margin-bottom:30px}
+.puesto{text-align:center;animation:sube .7s cubic-bezier(.2,1.3,.4,1) both}
+.puesto.p2{animation-delay:.15s}.puesto.p3{animation-delay:.3s}
+@keyframes sube{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.medalla{width:72px;height:72px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;
+  font:900 30px Nunito,sans-serif;color:var(--tinta);border:4px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.35)}
+.p1 .medalla{width:92px;height:92px;font-size:38px;background:var(--oro)}
+.p2 .medalla{background:var(--plata)}
+.p3 .medalla{background:var(--bronce)}
+.p1 .corona{font-size:34px;line-height:1;margin-bottom:2px;animation:flota 2s ease-in-out infinite}
+@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.puesto .apodo{font-weight:900;font-size:clamp(17px,2.6vw,24px);word-break:break-word;line-height:1.15}
+.puesto .pts{font-family:"Mountains of Christmas",cursive;font-size:clamp(24px,4vw,36px);color:var(--oro);line-height:1.1}
+.base{margin-top:10px;border-radius:16px 16px 6px 6px;display:flex;align-items:flex-start;justify-content:center;padding-top:10px;
+  font:900 26px Nunito,sans-serif;color:rgba(255,255,255,.9)}
+.p1 .base{height:150px;background:linear-gradient(var(--rojo),var(--rojo2));border-top:6px solid var(--oro)}
+.p2 .base{height:105px;background:linear-gradient(#2f9e62,#1f7a4d);border-top:6px solid var(--plata)}
+.p3 .base{height:75px;background:linear-gradient(#2f9e62,#1f7a4d);border-top:6px solid var(--bronce)}
+.vacio .medalla{background:rgba(255,255,255,.15);color:#fff}
+.vacio .apodo,.vacio .pts{opacity:.5}
+
+/* Lista */
+.lista{background:var(--nieve);color:var(--tinta);border-radius:22px;overflow:hidden;position:relative;
+  box-shadow:0 22px 40px -18px rgba(0,0,0,.6)}
+.lista::before{content:"";display:block;height:10px;background:repeating-linear-gradient(-45deg,var(--rojo) 0 12px,#fff 12px 24px)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:13px;color:var(--suave);font-weight:800;padding:12px 14px 8px;border-bottom:2px solid #efe3d6}
+td{padding:12px 14px;border-bottom:1px solid #f1e7dc;font-size:17px}
+tr:last-child td{border-bottom:0}
+td.n{width:56px;font-weight:900;color:var(--suave);font-variant-numeric:tabular-nums}
+td.a{font-weight:800;word-break:break-word}
+td.a small{display:block;font-weight:600;color:var(--suave);font-size:12px}
+td.p{text-align:right;font-weight:900;color:var(--rojo);font-size:20px;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.c,th.c,td.d,th.d{text-align:right;color:var(--suave);font-variant-numeric:tabular-nums;white-space:nowrap}
+th.p{text-align:right}
+tr.top td{background:#fdf3dc}
+.sinmas{padding:22px;text-align:center;color:var(--suave)}
+
+.pie{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px;color:#cfe5d8;font-size:14px}
+.pie button{background:transparent;border:1.5px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:6px 14px;
+  font:700 14px Nunito,sans-serif;cursor:pointer}
+.pie button:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
+
+.aviso{max-width:520px;margin:12vh auto 0;text-align:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);
+  border-radius:22px;padding:30px 22px}
+.aviso .ico{font-size:48px}
+.aviso h2{font-family:"Mountains of Christmas",cursive;font-size:36px;margin:8px 0}
+.aviso p{color:#cfe5d8;line-height:1.5;margin:0}
+
+@media (max-width:640px){
+  .cifras{gap:8px}
+  .podio{gap:8px}
+  .medalla{width:56px;height:56px;font-size:24px}
+  .p1 .medalla{width:70px;height:70px;font-size:30px}
+  .p1 .base{height:110px}.p2 .base{height:80px}.p3 .base{height:58px}
+  td.c,th.c{display:none}
+  td{padding:10px;font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important}}
+</style>
+</head>
+<body>
+<div class="luces" aria-hidden="true">
+  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+</div>
+<main class="marco" id="app"><div class="aviso"><p>Cargando resultados…</p></div></main>
+
+<script>
+// ====== CONFIGURACIÓN ======
+// La misma URL de tu Apps Script que usa index.html (termina en /exec)
+var API = 'https://script.google.com/macros/s/AKfycbz3BdSkfxvH9OzpXBI4hdP0D5GQu6DWrOJOsajLLxBc3F9gvqqaVgL_Pq5Nra9zPg1s/exec';
+var CADA_SEGUNDOS = 15;   // cada cuánto se actualiza solo
+
+// La llave viaja después del # para que no quede en registros de servidores
+var LLAVE = new URLSearchParams(location.hash.slice(1)).get('llave') ||
+            new URLSearchParams(location.search).get('llave') || '';
+
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function fmt(n) { return Number(n || 0).toLocaleString('es-MX'); }
+function poner(h) { document.getElementById('app').innerHTML = h; }
+
+function restringido() {
+  poner('<div class="aviso"><div class="ico">🔒</div><h2>Acceso restringido</h2>' +
+    '<p>Este tablero solo se puede ver con el link de los organizadores.</p></div>');
+}
+
+var ultimaVez = null, timer = null;
+
+function cargar() {
+  if (!LLAVE) { restringido(); return; }
+  fetch(API + '?' + new URLSearchParams({ api: 'tablero', llave: LLAVE }).toString())
+    .then(function (r) { return r.json(); })
+    .then(function (o) {
+      if (!o || o.denegado) { restringido(); clearInterval(timer); return; }
+      pintar(o);
+    })
+    .catch(function () {
+      var pie = document.getElementById('estado');
+      if (pie) pie.textContent = 'Sin conexión, reintentando…';
+      else poner('<div class="aviso"><div class="ico">⚠️</div><h2>Sin conexión</h2><p>Revisa tu internet. Se reintentará solo.</p></div>');
+    });
+}
+
+function puesto(j, n) {
+  var clase = 'puesto p' + n + (j ? '' : ' vacio');
+  return '<div class="' + clase + '">' +
+    (n === 1 ? '<div class="corona" aria-hidden="true">👑</div>' : '') +
+    '<div class="medalla">' + n + '</div>' +
+    '<div class="apodo">' + (j ? esc(j.apodo) : 'Por definir') + '</div>' +
+    '<div class="pts">' + (j ? fmt(j.puntos) + ' pts' : '—') + '</div>' +
+    '<div class="base">' + n + '°</div></div>';
+}
+
+function pintar(o) {
+  var js = o.jugadores || [], t = o.totales || {};
+  document.title = 'Tablero · ' + (o.evento || 'Posada');
+  var h = '<header><h1>' + esc(o.evento || 'Posada') + '</h1><p>Tablero de puntos</p></header>' +
+    '<section class="cifras">' +
+      '<div class="cifra"><b>' + fmt(t.jugadores) + '</b><span>jugadores</span></div>' +
+      '<div class="cifra"><b>' + fmt(t.escaneos) + '</b><span>códigos escaneados</span></div>' +
+      '<div class="cifra"><b>' + fmt(t.puntos) + '</b><span>puntos repartidos</span></div>' +
+    '</section>' +
+    '<section class="podio" aria-label="Tres primeros lugares">' +
+      puesto(js[1], 2) + puesto(js[0], 1) + puesto(js[2], 3) +
+    '</section>' +
+    '<section class="lista"><table><thead><tr>' +
+      '<th>#</th><th>Jugador</th><th class="c">Códigos</th><th class="d">Disponibles</th><th class="p">Puntos</th>' +
+    '</tr></thead><tbody>';
+  if (!js.length) {
+    h += '</tbody></table><div class="sinmas">Todavía no hay jugadores registrados.</div>';
+  } else {
+    js.forEach(function (j) {
+      h += '<tr' + (j.lugar <= 3 ? ' class="top"' : '') + '>' +
+        '<td class="n">' + (j.lugar <= 3 ? ['🥇', '🥈', '🥉'][j.lugar - 1] : j.lugar) + '</td>' +
+        '<td class="a">' + esc(j.apodo) + '<small>' + esc(j.id) + '</small></td>' +
+        '<td class="c">' + fmt(j.codigos) + '</td>' +
+        '<td class="d">' + fmt(j.disponibles) + '</td>' +
+        '<td class="p">' + fmt(j.puntos) + '</td></tr>';
+    });
+    h += '</tbody></table>';
+  }
+  h += '</section><div class="pie"><span id="estado"></span><button id="ya">Actualizar ahora</button></div>';
+  poner(h);
+  ultimaVez = Date.now();
+  reloj();
+  document.getElementById('ya').onclick = cargar;
+}
+
+function reloj() {
+  var el = document.getElementById('estado');
+  if (!el || !ultimaVez) return;
+  var s = Math.round((Date.now() - ultimaVez) / 1000);
+  el.textContent = 'Actualizado hace ' + s + ' s · se actualiza solo cada ' + CADA_SEGUNDOS + ' s';
+}
+
+cargar();
+timer = setInterval(cargar, CADA_SEGUNDOS * 1000);
+setInterval(reloj, 1000);
+</script>
+</body>
+</html>
